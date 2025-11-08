@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  # tot-api:
+  #   container_name: tot-api
+  #   build:
+  #     context: .
+  #     dockerfile: Tot.API/Dockerfile
+  #   ports:
+  #     - "5000:8080"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=totdb;Username=totuser;Password=totpass
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - tot-network
+
+  totpostgredb:
+    image: postgres:16
+    container_name: tot-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: totuser
+      POSTGRES_PASSWORD: totpass
+      POSTGRES_DB: totdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - tot-postgres-data:/var/lib/postgresql/data
+    networks:
+      - tot-network
+
+volumes:
+  tot-postgres-data:
+
+networks:
+  tot-network:
+    driver: bridge
